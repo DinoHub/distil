@@ -41,7 +41,7 @@ def get_xception(num_classes, verbose=True):
     #               metrics=['accuracy'])
     if verbose:
         model.summary()
-    return 32, (299, 299), model
+    return 32, (224, 224), model
 
 # Native preprocessing
 # No progressive scaling
@@ -265,10 +265,10 @@ if __name__ == '__main__':
     # df = folder_to_df( data_folder )
     # df.to_csv( 'data.csv', index=False )
     # exit()
-    fn_list_pickle = 'full_cropped_filenames.p'
-    softlabels = 'full_cropped_softlabels.txt'
-    source_folder = 'data/full_cropped'
-    split_dir = 'data/full_cropped_split'
+    fn_list_pickle = 'full_filenames.p'
+    softlabels = 'full_softlabels.txt'
+    source_folder = 'data/5poses'
+    split_dir = 'data/5poses_split'
     train_df_fp = 'frames/train.csv'
     train_data = os.path.join(split_dir, 'train')
     val_df_fp = 'frames/val.csv'
@@ -285,15 +285,15 @@ if __name__ == '__main__':
     # folder_to_df( os.path.join(split_dir, 'val'), val_df, filenames, soft_preds )
     # exit()
 
-    n_epochs = 250
+    n_epochs = 500
     # target_size = (224,224)
     batch_size = 32
-    num_classes = 16
+    num_classes = 5
     alpha = 0.5
     x_col = 'im_path'
     y_col = ['soft{}'.format(k) for k in range(num_classes)] + ['{}'.format(k) for k in range(num_classes)]
 
-    context = 'mobilenet_v2_distilled'
+    context = 'xception_distilled_5poses_alpha5'
     if not os.path.exists( 'models/{}'.format(context) ):
         os.makedirs( 'models/{}'.format(context) )
 
